@@ -17,7 +17,7 @@ export function middleware(request) {
 
   // If there's a token and trying to access auth pages, redirect to dashboard
   if (token && isPublicPath) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
   return NextResponse.next();
