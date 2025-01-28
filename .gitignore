@@ -12,7 +12,7 @@
 
 # testing
 /coverage
-
+.wakatime-project
 # next.js
 /.next/
 /out/

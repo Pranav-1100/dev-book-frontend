@@ -3,19 +3,37 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: 0 0% 100%;
+  --foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --border: 214.3 31.8% 91.4%;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-white text-gray-900 antialiased;
+}
+
+.chat-container {
+  @apply max-w-5xl mx-auto h-[calc(100vh-4rem)] flex flex-col;
+}
+
+.message-container {
+  @apply flex-1 overflow-y-auto px-4 py-6 space-y-6;
+}
+
+.message {
+  @apply max-w-3xl mx-auto py-4 px-6 rounded-lg;
+}
+
+.user-message {
+  @apply bg-gray-100;
+}
+
+.assistant-message {
+  @apply bg-white border border-gray-200;
+}
+
+.input-container {
+  @apply max-w-3xl mx-auto w-full p-4 border-t bg-white;
 }
