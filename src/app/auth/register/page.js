@@ -32,7 +32,7 @@ export default function RegisterPage() {
     try {
       const { confirmPassword, ...registerData } = userData;
       await register(registerData);
-      router.push('/dashboard');
+      router.push('/');
     } catch (err) {
       setError(err.message || 'Failed to register');
     } finally {

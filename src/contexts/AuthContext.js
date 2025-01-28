@@ -53,7 +53,7 @@ export function AuthProvider({ children }) {
       localStorage.setItem('auth_token', token);
       
       setUser(user);
-      router.push('/dashboard');
+      router.push('/');
       return user;
     } catch (err) {
       setError(err.message || 'Login failed');
@@ -71,7 +71,7 @@ export function AuthProvider({ children }) {
       localStorage.setItem('auth_token', token);
       
       setUser(user);
-      router.push('/dashboard');
+      router.push('/');
       return user;
     } catch (err) {
       setError(err.message || 'Registration failed');
