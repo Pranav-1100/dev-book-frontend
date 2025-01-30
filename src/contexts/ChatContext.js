@@ -66,10 +66,41 @@ export function ChatProvider({ children }) {
         timestamp: new Date().toISOString()
       }]);
 
-      // Send to API
-      const response = await chatAPI.sendMessage(messageContent);
+      let response;
+      let diagram = null;
 
-      if (!response || !response.response) {
+      if (messageType === 'diagram') {
+        // Send only the required fields to generate diagram
+        const diagramResponse = await diagramAPI.generate({
+          title: "User Flow Diagram",
+          description: messageContent,
+          type: "flowchart"
+        });
+        
+        // Set the diagram from the response
+        if (diagramResponse?.content?.mermaid) {
+          const cleanMermaid = diagramResponse.content.mermaid
+            .replace(/```mermaid\n?/g, '')
+            .replace(/```\n?/g, '')
+            .trim();
+          setCurrentDiagram(cleanMermaid);
+          diagram = cleanMermaid;
+        }
+        
+        response = {
+          response: 'I\'ve generated a diagram based on your description. You can view it in the preview panel.',
+          context: {
+            timestamp: new Date().toISOString(),
+            type: 'diagram'
+          },
+          diagram: diagram
+        };
+      } else {
+        // Handle regular chat message
+        response = await chatAPI.sendMessage(messageContent);
+      }
+
+      if (!response) {
         throw new Error('Invalid response from server');
       }
 
@@ -80,8 +111,12 @@ export function ChatProvider({ children }) {
         content: response.response,
         type: messageType,
         context: response.context,
+        diagram: diagram,
         timestamp: response.context?.timestamp || new Date().toISOString()
       }]);
+
+      // Update chat history
+      await loadChatHistory();
 
       return response;
     } catch (error) {
@@ -110,7 +145,8 @@ export function ChatProvider({ children }) {
     error,
     sendMessage,
     clearChat,
-    loadChatHistory
+    loadChatHistory,
+    setCurrentDiagram
   };
 
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;

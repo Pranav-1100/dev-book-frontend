@@ -1,6 +1,6 @@
 
 // Generic API call function with authentication
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://dev-book.trou.hackclub.app/api';
 
 async function fetchAPI(endpoint, options = {}) {
   // Get token from localStorage
